@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<!-- Google Tag Manager -->
+
+    <title>LumenPnP Config Tool</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+
+
+    
+
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+  <script type="module" crossorigin src="./assets/index-e442241e.js"></script>
+  <link rel="stylesheet" href="./assets/index-5f549ff5.css">
+</head>
+<body>
+
+
+  <div id="output"></div>
+    <div id="background-pane">
+      <div id="menu">
+      <h1>LumenPnP - Pays For Itself</h1>
+      <p style="text-align:left;">This calculator determines how many boards it takes to break even on a LumenPnP purchase, and compares the boards produced per hour against hand-population. It makes a few assumptions:</p>
+      <ul>
+        <li>It takes approximately two hours to set up a LumenPnP for a job.</li>
+        <li>It takes about one minute to unload and load a board in the LumenPnP.</li>
+        <li>The LumenPnP is running at 1000 CPH</li>
+      </ul>
+      <br >
+      <div class="row">
+        <div class="col-left">
+          <h3>Operator Hourly Rate (in USD)</h3>
+          <input type="number" value="20" id="operator-rate"><br>
+        </div>
+        <div class="col-center">
+          <h3>Time to Hand-Assemble One Board (In Minutes)</h3>
+          <input type="number" value="45" id="hand-time"><br>
+        </div>
+        <div class="col-right">
+          <h3>Parts per Board</h3>
+          <input type="number" value="100" id="cpb"><br>
+        </div>
+      </div>
+
+    <br>
+    
+    <div id="button-wrapper">
+      <button id="calculate-button">Calculate</button>
+    </div>
+
+    <canvas style="height:0px;" id="myChart"></canvas>
+
+    <div id="order"></div>
+
+    <canvas style="height:0px;" id="boardsChart"></canvas>
+
+    <div id="bph-result"></div>
+
+    </div>
+
+    </div>
+  
+    <a href="https://www.opulo.io/"><div id="info">
+      <img style="width: 120px;" src="./assets/opulo-black-alpha-f3ee483a.png" />
+    </div></a>
+
+  </div>
+
+  
+
+</body>
+</html>
