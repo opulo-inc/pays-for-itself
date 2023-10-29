@@ -1,11 +1,12 @@
 {
-  "name": "pays-for-itself",
-  "version": "1.0.0",
-  "description": "A web calculator for determining after how many jobs does a LumenPnP pay for itself",
-  "main": "script.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "type": "module",
+  "devDependencies": {
+    "@types/three": "^0.154.0",
+    "site": "^2.3.1",
+    "vite": "^4.4.4"
   },
-  "author": "",
-  "license": "ISC"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx vite build"
+  }
 }
