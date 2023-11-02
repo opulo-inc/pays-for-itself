@@ -28,6 +28,7 @@
 <body>
 
 
+
   <div id="output"></div>
     <div id="background-pane">
       <div id="menu">
@@ -38,6 +39,7 @@
         <li>It takes about one minute to unload and load a board in the LumenPnP.</li>
         <li>The LumenPnP is running at 1000 CPH</li>
       </ul>
+
       <br >
       <div class="row">
         <div class="col-left">
@@ -54,21 +56,42 @@
         </div>
       </div>
 
-    <br>
+    
     
     <div id="button-wrapper">
       <button id="calculate-button">Calculate</button>
     </div>
 
-    <canvas style="height:0px;" id="myChart"></canvas>
+    <div class="row money-time">
 
-    <div id="order"></div>
+      <div class="slider-label">Time</div>
 
-    <canvas style="height:0px;" id="boardsChart"></canvas>
+      <label class="switch">
+        <input id="graph-type" type="checkbox">
+        <span class="slider round"></span>
+      </label>
 
-    <div id="bph-result"></div>
+      <div class="slider-label">Money</div>
 
     </div>
+
+    <div id="cost-graph" class="graph-result">
+
+      <canvas style="height:0px;" id="myChart"></canvas>
+
+      <div id="order"></div>
+
+    </div>
+
+    <div id="time-graph" class="graph-result">
+
+      <canvas style="height:0px;" id="boardsChart"></canvas>
+
+      <div id="bph-result"></div>
+
+    </div>
+
+
 
     </div>
   

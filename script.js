@@ -3,6 +3,24 @@ document.getElementById ("calculate-button").addEventListener("click", calculate
 var activeChart;
 var boardsChart;
 
+document.getElementById("graph-type").onclick = function() {
+  if (this.checked) {
+    document.getElementById("cost-graph").style.display = "block";
+    document.getElementById("time-graph").style.display = "none";
+      
+  }
+  else {
+    document.getElementById("cost-graph").style.display = "none";
+    document.getElementById("time-graph").style.display = "block";
+  }
+};
+
+// the first consideration is how much time it saves you from the tweezers, bottom up approach.
+
+//the other is a cost consideration from the outsourcers
+
+// i almost want a slider that lets you pick between time and money
+
 function destroy(lumenChart, boardsChart){
     if (typeof lumenChart !== 'undefined') {
         lumenChart.destroy();
@@ -302,7 +320,14 @@ function calculate(){
     document.getElementById("bph-result").innerHTML = "<p>A LumenPnP assembles boards</p><div class='flipped-point'>" + speed_factor.toFixed(1) + "x</div><p>faster than hand-placing.</p>";
     document.getElementById("bph-result").style.display = "inline-block";
 
-
+    if (document.getElementById("graph-type").checked){
+      document.getElementById("cost-graph").style.display = "block";
+      document.getElementById("time-graph").style.display = "none";
+    }
+    else {
+      document.getElementById("cost-graph").style.display = "none";
+      document.getElementById("time-graph").style.display = "block";
+    }
 
 }
 
