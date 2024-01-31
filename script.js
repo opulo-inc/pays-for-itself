@@ -1,3 +1,19 @@
+// TWEEZERS vs LUMEN
+/*
+
+variables:
+- operator hourly rate - 20 (ziprecruiter link)
+- time to hand-assemble one board - 20min
+- time to set up - 2 hours
+- parts per board - 29
+- boards per job - 4
+
+assumptions:
+- takes 2.5 minutes to flip a job
+- cph 800
+
+*/
+
 document.getElementById ("calculate-button").addEventListener("click", calculate, false);
 
 var activeChart;
@@ -15,12 +31,6 @@ document.getElementById("graph-type").onclick = function() {
   }
 };
 
-// the first consideration is how much time it saves you from the tweezers, bottom up approach.
-
-//the other is a cost consideration from the outsourcers
-
-// i almost want a slider that lets you pick between time and money
-
 function destroy(lumenChart, boardsChart){
     if (typeof lumenChart !== 'undefined') {
         lumenChart.destroy();
@@ -35,10 +45,10 @@ function calculateHandCost(x, operator_rate, time_to_hand_assemble_board) {
     return hand_option_cost;
 }
 
-function calculateLumenCost(x, operator_rate) {
+function calculateLumenCost(x, operator_rate, boards_per_job) {
     var lumenpnp_cost = 1995;                   //in usd
-    var lumenpnp_setup_time = 2;                //in hours
-    var human_time_per_lumenpnp_board = 1/60;   //in hours
+    var lumenpnp_setup_time = 3;                //in hours
+    var human_time_per_lumenpnp_board = (2.5/60) / boards_per_job;   //in hours
 
     var pnp_option_cost = lumenpnp_cost + (lumenpnp_setup_time * operator_rate) + (human_time_per_lumenpnp_board * operator_rate * x);
     return pnp_option_cost;
@@ -49,9 +59,19 @@ function calculateHandBoards(h, time_to_hand_assemble_board){
     return h / time_to_hand_assemble_board;
 }
 
-function calculateLumenBoards(h, chips_per_board){
-    var lumenCPH = 1000;
-    return h * (lumenCPH / chips_per_board);
+function calculateLumenBoards(h, chips_per_board, boards_per_job){
+  if(h<4){
+    return 0;
+  }
+  else{
+    let hoursOfProduction = h - 3;
+
+    let humanTimePerBoard =  (2.5/60) / boards_per_job;
+    let lumenTimePerBoard = (chips_per_board / 800);
+    let timePerBoard = humanTimePerBoard + lumenTimePerBoard;
+
+    return hoursOfProduction / timePerBoard;
+  }
 }
 
 
@@ -64,8 +84,8 @@ function calculate(){
 
     var operator_rate = document.getElementById("operator-rate").value;
     var time_to_hand_assemble_board = document.getElementById("hand-time").value / 60;
-    console.log(time_to_hand_assemble_board);
-    var chips_per_board = document.getElementById("cpb").value;
+    var chips_per_board = document.getElementById("parts-per-board").value;
+    let boards_per_job = document.getElementById("boards-per-job").value;
 
 //--------------------
 // COST CALCULATION
@@ -81,11 +101,9 @@ function calculate(){
     while(!cost_flipped){
 
         hand_data[index - 1] = calculateHandCost(index, operator_rate, time_to_hand_assemble_board);
-        lumen_data[index - 1] = calculateLumenCost(index, operator_rate);
+        lumen_data[index - 1] = calculateLumenCost(index, operator_rate, boards_per_job);
 
         x_axis[index - 1] = index;
-
-        console.log("hand data: " + hand_data[index - 1])
 
         if(hand_data[index - 1] > lumen_data[index - 1]){
             cost_flipped = true;
@@ -99,9 +117,9 @@ function calculate(){
         }
     }
 
-    while(index < cost_flipped_point*3){
+    while(index < cost_flipped_point*5){
         hand_data[index - 1] = calculateHandCost(index, operator_rate, time_to_hand_assemble_board);
-        lumen_data[index - 1] = calculateLumenCost(index, operator_rate);
+        lumen_data[index - 1] = calculateLumenCost(index, operator_rate, boards_per_job);
         x_axis[index - 1] = index;
 
         index = index + 1;
@@ -170,6 +188,7 @@ function calculate(){
             }
           },
           maintainAspectRatio: true,
+          animations: false,
           aspectRatio: 2,
           scales: {
             y: {
@@ -206,7 +225,7 @@ function calculate(){
     document.getElementById("order").style.display = "inline-block";
 
 //--------------------
-// BPH CALCULATION
+// TIME CALCULATION
 
     var lumen_boards = [];
     var hand_boards = [];
@@ -215,17 +234,17 @@ function calculate(){
     var index = 1;
 
     while(index < 41){
-        hand_boards[index - 1] = calculateHandBoards(index, time_to_hand_assemble_board);
-        console.log(hand_boards[index-1]);
-        lumen_boards[index - 1] = calculateLumenBoards(index, chips_per_board);
 
-        x_axis_boards[index - 1] = index;
+      //calculate how many boards would be made at this hour
+      hand_boards[index - 1] = calculateHandBoards(index, time_to_hand_assemble_board);
+      
+      //calculate how many board would be made on the lumen at this hour
+      lumen_boards[index - 1] = calculateLumenBoards(index, chips_per_board, boards_per_job);
 
-        index = index + 1;
+      //add x axis
+      x_axis_boards[index - 1] = index;
 
-        if(index > 5000){
-            break;
-        }
+      index = index + 1;
 
     }
 
@@ -285,6 +304,7 @@ function calculate(){
             }
           },
           maintainAspectRatio: true,
+          animations: false,
           aspectRatio: 2,
           scales: {
             y: {
@@ -314,10 +334,11 @@ function calculate(){
             
         
     });
-    // end chart
-    var speed_factor = lumen_boards[39] / hand_boards[39];
 
-    document.getElementById("bph-result").innerHTML = "<p>A LumenPnP assembles boards</p><div class='flipped-point'>" + speed_factor.toFixed(1) + "x</div><p>faster than hand-placing.</p>";
+    // conclusion data
+    var speed_factor = (lumen_boards[39]-lumen_boards[38]) / (hand_boards[39]-hand_boards[38]);
+
+    document.getElementById("bph-result").innerHTML = "<p>A LumenPnP assembles boards</p><div class='flipped-point'>" + speed_factor.toFixed(1) + "x</div><p>faster than hand-placing after setup.</p>";
     document.getElementById("bph-result").style.display = "inline-block";
 
     if (document.getElementById("graph-type").checked){
