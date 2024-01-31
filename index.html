@@ -4,7 +4,7 @@
 
 <!-- Google Tag Manager -->
 
-    <title>LumenPnP Config Tool</title>
+    <title>LumenPnP vs. Hand Assembly</title>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
@@ -24,8 +24,8 @@
     <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
-  <script type="module" crossorigin src="./assets/index-1f340d19.js"></script>
-  <link rel="stylesheet" href="./assets/index-0352f8a6.css">
+  <script type="module" crossorigin src="./assets/index-8a98007c.js"></script>
+  <link rel="stylesheet" href="./assets/index-805d0264.css">
 </head>
 <body>
 
@@ -34,27 +34,52 @@
   <div id="output"></div>
     <div id="background-pane">
       <div id="menu">
-      <h1>LumenPnP - Pays For Itself</h1>
-      <p style="text-align:left;">This calculator determines how many boards it takes to break even on a LumenPnP purchase, and compares the boards produced per hour against hand-population. It makes a few assumptions:</p>
+      <h1>LumenPnP vs. Hand Assembly</h1>
+      <p style="text-align:left;">This calculator compares manufacturing boards by hand vs using the LumenPnP. It makes a few assumptions:</p>
       <ul>
-        <li>It takes approximately two hours to set up a LumenPnP for a job.</li>
-        <li>It takes about one minute to unload and load a board in the LumenPnP.</li>
-        <li>The LumenPnP is running at 1000 CPH</li>
+        <li>It takes approximately two and a half minutes to flip a job.</li>
+        <li>The LumenPnP is running at a conservative 800 CPH.</li>
+
       </ul>
 
       <br >
       <div class="row">
-        <div class="col-left">
-          <h3>Operator Hourly Rate (in USD)</h3>
+        <div class="col">
+          <div class="help-tip help-tip-right">
+            <p>
+              As <a target="_blank" href="https://www.ziprecruiter.com/Salaries/Circuit-Board-Assembly-Salary">reported by ZipRecruiter</a>, the average hourly wage for a Circuit Board Assembly technician is $20 an hour.
+            </p>
+          </div>
+          <h3>Operator Hourly Rate (USD)</h3>
           <input type="number" value="20" id="operator-rate"><br>
         </div>
-        <div class="col-center">
-          <h3>Time to Hand-Assemble One Board (In Minutes)</h3>
-          <input type="number" value="45" id="hand-time"><br>
-        </div>
-        <div class="col-right">
+        
+        <div class="col">
+          <div class="help-tip help-tip-left">
+            <p>
+              This number is how many <i>total components</i> need to be placed on each board.
+            </p>
+          </div>
           <h3>Parts per Board</h3>
-          <input type="number" value="100" id="cpb"><br>
+          <input type="number" value="50" id="parts-per-board"><br>
+        </div>
+        <div class="col" >
+          <div class="help-tip help-tip-left">
+            <p>
+              If you're unsure how long this takes, a good conservative calculation is 40 seconds per component.
+            </p>
+          </div>
+          <h3>Hand-Assembly Time per Board (min)</h3>
+          <input type="number" value="30" id="hand-time"><br>
+        </div>
+        <div class="col">
+          <div class="help-tip help-tip-left">
+            <p>
+              If you are running multiple boards per job, either with panels or just separately mounting multiple PCBs, input the total number of boards you can fit on the LumenPnP for a single job.
+            </p>
+          </div>
+          <h3>Boards per Job</h3>
+          <input type="number" value="4" id="boards-per-job"><br>
         </div>
       </div>
 
