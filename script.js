@@ -221,7 +221,7 @@ function calculate(){
 
     // add flip point below
 
-    document.getElementById("order").innerHTML = "<p>A LumenPnP pays for itself after</p><div class='flipped-point'>" + cost_flipped_point + "</div><p>boards produced.</p>";
+    document.getElementById("order").innerHTML = "<p>A LumenPnP pays for itself after</p><div class='flipped-point'>" + cost_flipped_point + "</div><p>boards produced.</p><br><h2>Questions?</h2><h3>Ask us at <a href='mailto:sales@opulo.io'>sales@opulo.io</a>.</h3> ";
     document.getElementById("order").style.display = "inline-block";
 
 //--------------------
@@ -338,7 +338,7 @@ function calculate(){
     // conclusion data
     var speed_factor = (lumen_boards[39]-lumen_boards[38]) / (hand_boards[39]-hand_boards[38]);
 
-    document.getElementById("bph-result").innerHTML = "<p>A LumenPnP assembles boards</p><div class='flipped-point'>" + speed_factor.toFixed(1) + "x</div><p>faster than hand-placing after setup.</p>";
+    document.getElementById("bph-result").innerHTML = "<p>A LumenPnP assembles boards</p><div class='flipped-point'>" + speed_factor.toFixed(1) + "x</div><p>faster than hand-placing after setup.</p><br><h2>Questions?</h2><h3>Ask us at <a href='mailto:sales@opulo.io'>sales@opulo.io</a>.</h3> ";
     document.getElementById("bph-result").style.display = "inline-block";
 
     if (document.getElementById("graph-type").checked){
