@@ -14,10 +14,129 @@ assumptions:
 
 */
 
-document.getElementById ("calculate-button").addEventListener("click", calculate, false);
+//joint data
+/*
+variables:
+- parts per board
+
+
+assumptions (could be editable under dropdown):
+- takes 2 minutes to flip a job
+- cph 800
+- hand assembly time per part assumption
+- boards per job (just assume four, customer wont necessarily know what they could fit)
+- outsourced cost per smt part
+*/
+
+
+document.getElementById("toggle").addEventListener("click", toggle, false);
+
+document.getElementById("calculate-button").addEventListener("click", calculate, false);
+
+document.getElementById("calculate-button-outsource").addEventListener("click", calculate_outsource, false);
 
 var activeChart;
 var boardsChart;
+var outsourcedChart;
+var handActive = true;
+
+function calculate_outsource(){
+
+  if (typeof outsourcedChart !== 'undefined') {
+    outsourcedChart.destroy();
+  }
+  var numOfBoards = document.getElementById("num-of-boards-outsourcing").value;
+  var partsPerBoard = document.getElementById("parts-per-board-outsourcing").value;
+
+  let out = 9+((numOfBoards-100)/250);
+
+  let lumenwork = (3/24)+(numOfBoards*partsPerBoard/800/24)
+
+  console.log(lumenwork)
+
+  let lumen = Math.floor(lumenwork/(.33))*0.66 + lumenwork; 
+
+  console.log(lumen)
+
+
+  var timelines = [out, lumen];
+
+  var ctx = document.getElementById("outsource-graph");
+  const labels = ["Outsourced", "LumenPnP"]
+  const data = {
+    labels: labels,
+    datasets: [
+      {
+        label: 'Days',
+        data: timelines,
+      }
+    ]
+  };
+
+  outsourcedChart = new Chart(ctx, {
+    type: 'bar',
+    data: data,  
+    options: {
+      indexAxis: 'y',
+      plugins: {
+        title: {
+            display: true,
+            text: 'Time to Produce',
+            padding: {
+                top: 30,
+                bottom: 10
+            },
+            font: {
+              size: 20
+            }
+        },
+        legend: {
+          display: false,
+        }
+      },
+      maintainAspectRatio: true,
+      animations: false,
+      aspectRatio: 2,
+      scales: {
+        y: {
+          
+          display: true,
+          
+        },
+        x: {
+          title: {
+            display: true,
+            text: "Days"
+          }
+        }
+      }
+    }
+  });
+
+
+}
+
+function toggle(){
+  if(handActive){
+    //hide hand, show outsource
+    document.getElementById("hand").style.display = "none";
+    document.getElementById("outsource").style.display = "block";
+    //change copy in toggle
+    document.getElementById("toggle").innerHTML = "Compare Against Hand Placing Instead";
+
+    handActive = false;
+  }
+  else{
+    //hide outsource, show hand
+    document.getElementById("outsource").style.display = "none";
+    document.getElementById("hand").style.display = "block";
+    //change copy in toggle
+    document.getElementById("toggle").innerHTML = "Compare Against Outsourcing Instead";
+
+    handActive = true;
+
+  }
+}
 
 document.getElementById("graph-type").onclick = function() {
   if (this.checked) {
