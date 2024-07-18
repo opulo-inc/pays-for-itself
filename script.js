@@ -38,7 +38,7 @@ document.getElementById("calculate-button-outsource").addEventListener("click", 
 var activeChart;
 var boardsChart;
 var outsourcedChart;
-var handActive = true;
+var handActive = false;
 
 function calculate_outsource(){
 
