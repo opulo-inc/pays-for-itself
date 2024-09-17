@@ -42,18 +42,29 @@ var handActive = false;
 
 function calculate_outsource(){
 
+  // this whole function operates in days as a base unit
+
   if (typeof outsourcedChart !== 'undefined') {
     outsourcedChart.destroy();
   }
+
   var numOfBoards = document.getElementById("num-of-boards-outsourcing").value;
   var partsPerBoard = document.getElementById("parts-per-board-outsourcing").value;
 
-  let out = 9+((numOfBoards-100)/250);
+  var outpartcalc = partsPerBoard
 
-  let lumenwork = (3/24)+(numOfBoards*partsPerBoard/800/24)
+  if (outpartcalc < 20){
+    outpartcalc = 20
+  }
 
-  console.log(lumenwork)
+  let out = 10 + (( numOfBoards / 500 ) * (outpartcalc / 20) ); // Macrofab's fastest service is "as little as 10 days": https://www.macrofab.com/how-it-works/
 
+// this is: time to setup, plus how long it takes to make that qty of boards at cph
+  let lumenwork = (2/24)+(((numOfBoards*partsPerBoard)/1200 ) / 24)
+
+  console.log("lumenwork" +  lumenwork)
+
+// now we take that number and account for not being in the office, only running hte machine 8 hours a day
   let lumen = Math.floor(lumenwork/(.33))*0.66 + lumenwork; 
 
   console.log(lumen)
@@ -113,6 +124,9 @@ function calculate_outsource(){
     }
   });
 
+  document.getElementById("outsource-order").innerHTML = "<button onclick='location.href=\"https://www.opulo.io/pages/contact-sales\";' id='expert-button'>Talk To An Expert</button>";
+  document.getElementById("outsource-order").style.display = "inline-block";
+  
 
 }
 
@@ -186,7 +200,7 @@ function calculateLumenBoards(h, chips_per_board, boards_per_job){
     let hoursOfProduction = h - 3;
 
     let humanTimePerBoard =  (2.5/60) / boards_per_job;
-    let lumenTimePerBoard = (chips_per_board / 800);
+    let lumenTimePerBoard = (chips_per_board / 1200);
     let timePerBoard = humanTimePerBoard + lumenTimePerBoard;
 
     return hoursOfProduction / timePerBoard;
@@ -204,7 +218,7 @@ function calculate(){
     var operator_rate = document.getElementById("operator-rate").value;
     var time_to_hand_assemble_board = document.getElementById("hand-time").value / 60;
     var chips_per_board = document.getElementById("parts-per-board").value;
-    let boards_per_job = document.getElementById("boards-per-job").value;
+    let boards_per_job = 4;
 
 //--------------------
 // COST CALCULATION
@@ -340,7 +354,7 @@ function calculate(){
 
     // add flip point below
 
-    document.getElementById("order").innerHTML = "<p>A LumenPnP pays for itself after</p><div class='flipped-point'>" + cost_flipped_point + "</div><p>boards produced.</p><br><h2>Questions?</h2><h3>Ask us at <a href='mailto:sales@opulo.io'>sales@opulo.io</a>.</h3> ";
+    document.getElementById("order").innerHTML = "<p>A LumenPnP pays for itself after</p><div class='flipped-point'>" + cost_flipped_point + "</div><p>boards produced.</p><br><h2>Questions?</h2><button onclick='location.href=\"https://www.opulo.io/pages/contact-sales\";' id='expert-button'>Talk To An Expert</button> ";
     document.getElementById("order").style.display = "inline-block";
 
 //--------------------
@@ -457,7 +471,7 @@ function calculate(){
     // conclusion data
     var speed_factor = (lumen_boards[39]-lumen_boards[38]) / (hand_boards[39]-hand_boards[38]);
 
-    document.getElementById("bph-result").innerHTML = "<p>A LumenPnP assembles boards</p><div class='flipped-point'>" + speed_factor.toFixed(1) + "x</div><p>faster than hand-placing after setup.</p><br><h2>Questions?</h2><h3>Ask us at <a href='mailto:sales@opulo.io'>sales@opulo.io</a>.</h3> ";
+    document.getElementById("bph-result").innerHTML = "<p>A LumenPnP assembles boards</p><div class='flipped-point'>" + speed_factor.toFixed(1) + "x</div><p>faster than hand-placing after setup.</p><br><h2>Questions?</h2><button onclick='location.href=\"https://www.opulo.io/pages/contact-sales\";' id='expert-button'>Talk To An Expert</button>";
     document.getElementById("bph-result").style.display = "inline-block";
 
     if (document.getElementById("graph-type").checked){

@@ -36,11 +36,10 @@
 
       <div id="hand" class="tab">
           <h1>LumenPnP vs. Hand Assembly</h1>
-          <p style="text-align:left;">This calculator compares manufacturing boards by hand vs using the LumenPnP. It makes a few assumptions:</p>
+          <p style="text-align:left;">This calculator compares manufacturing boards by hand vs using the LumenPnP.</p>
           <ul>
-            <li>It takes approximately two and a half minutes to flip a job.</li>
-            <li>The LumenPnP is running at a conservative 800 CPH.</li>
-
+            <li>It assumes a conservative 2 hour LumenPnP setup time and 1200 chips per hour.</li>
+            <li>It takes approximately two and a half minutes to flip a job, with four boards per job.</li>
           </ul>
 
           <br >
@@ -73,18 +72,7 @@
               <h3>Hand-Assembly Time per Board (min)</h3>
               <input type="number" value="30" id="hand-time"><br>
             </div>
-            <div class="col">
-              <div class="help-tip help-tip-left">
-                <p>
-                  If you are running multiple boards per job, either with panels or just separately mounting multiple PCBs, input the total number of boards you can fit on the LumenPnP for a single job.
-                </p>
-              </div>
-              <h3>Boards per Job</h3>
-              <input type="number" value="4" id="boards-per-job"><br>
-            </div>
           </div>
-
-        
         
         <div id="button-wrapper">
           <button id="calculate-button">Calculate</button>
@@ -99,7 +87,7 @@
             <span class="slider round"></span>
           </label>
 
-          <div class="slider-label">Money</div>
+          <div class="slider-label">Labor Cost</div>
 
         </div>
 
@@ -125,10 +113,10 @@
       <div id="outsource">
 
         <h1>LumenPnP vs. Outsourcing</h1>
-          <p style="text-align:left;">This calculator compares outsourcing PCBA production vs using the LumenPnP. It makes a few assumptions:</p>
+          <p style="text-align:left;">This calculator compares outsourcing PCBA production vs using the LumenPnP.</p>
           <ul>
             <li>It uses online quote tools as a benchmark for outsource timing.</li>
-            <li>It assumes a conservative 3 hour LumenPnP setup time and 800 CPH.</li>
+            <li>It assumes a conservative 2 hour LumenPnP setup time and 1200 chips per hour.</li>
             <li>It adds 16 hours to the LumenPnP timeline for every 8 hours of production to consider non-work hours.</li>
           </ul>
 
@@ -163,7 +151,7 @@
 
           <canvas style="height:0px;" id="outsource-graph"></canvas>
 
-          <div id="order"></div>
+          <div style="display:none" id="outsource-order"></div>
 
         </div>
       

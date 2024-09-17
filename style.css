@@ -10,11 +10,7 @@
     text-align: center;
     overflow-x:visible;
     
-    
-
 }
-
-
 
 #hand {
     position: relative;
@@ -70,6 +66,12 @@
     margin-right: auto;
     padding: 10px;
     display: none;
+}
+
+#expert-button {
+    margin-top:10px;
+    width:140px;
+
 }
 
 .flipped-point {
@@ -359,7 +361,7 @@ a:visited {
     display: inline-block;
     margin:20px;
     background-color: #eee;
-    width: 60px;
+    width: 100px;
     padding:10px;
     border-radius: 5px;;
   }
@@ -397,7 +399,7 @@ a:visited {
     width: 20px;
     height: 20px;
     font-size: 14px;
-    line-height: 22px;
+    line-height: 20px;
     cursor: default;
     z-index: 100;
 }
@@ -405,7 +407,7 @@ a:visited {
 .help-tip:before{
     content:'?';
     font-weight: bold;
-    color:#fff;
+    color:#000;
     z-index: 10;
 }
 
